@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Appel en cours</title>
+    <link rel="shortcut icon" href="/images/logo.svg" />
+    <link rel="stylesheet" href="../css/chat.css" />
+    <link rel="stylesheet" href="../css/snackbar.css" />
+    <script
+      src="https://kit.fontawesome.com/9d7bb7e31a.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="/js/jquery.ui.touch-punch.js"></script>
+    <meta property="og:title" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+        <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      gtag("js", new Date());
+      gtag("config", "UA-162048272-1");
+    </script>
+  </head>
+  <body id="body" onresize="windowResized()">
+    <div id="header">
+      <a target="_blank" href="/">
+        <img src="/images/logo.svg" alt="Neon" width="48" height="48" />
+        <p>Appel vidéo en cours</p>
+      </a>
+    </div>
+
+    <p id="remote-video-text"></p>
+    <video id="remote-video" autoplay playsinline></video>
+    <div id="moveable">
+      <p id="local-video-text">En attente de la Webcam</p>
+      <video id="local-video" autoplay muted playsinline></video>
+    </div>
+
+    <div id="entire-chat">
+      <div id="chat-zone">
+        <div class="chat-messages"></div>
+      </div>
+      <form class="compose">
+        <input type="text" placeholder="Saissisez un message" />
+      </form>
+    </div>
+
+    <div class="multi-button">
+      <div class="buttonContainer">
+        <button class="hoverButton" onclick="{muteMicrophone()}">
+          <i id="mic-icon" class="fas fa-microphone fa-xs"></i>
+        </button>
+        <div class="HoverState" id="mic-text">Muet</div>
+      </div>
+      
+      <!-- PERMET DE FAIRE PASSER L'APPEL EN PLEIN ECRAN -->
+
+      <!--      <div class="buttonContainer">-->
+      <!--        <button class="hoverButton" onclick="{openFullscreen()}">-->
+      <!--          <i class="fas fa-compress fa-xs"></i>-->
+      <!--        </button>-->
+      <!--        <div class="HoverState">Fullscreen</div>-->
+      <!--      </div>-->
+
+      <div class="buttonContainer">
+        <button class="hoverButton" onclick="{pauseVideo()}">
+          <i class="fas fa-video fa-xs" id="video-icon"></i>
+        </button>
+        <div class="HoverState" id="video-text">Pause de la Video</div>
+      </div>
+
+      <!-- PERMET D'ACTIVER LE PARTAGE D'ECRAN -->
+
+      <!--
+      <div class="buttonContainer">
+        <button class="hoverButton" id="share-button" onclick="{swap()}">
+          <i id="swap-icon" class="fas fa-desktop fa-xs"></i>
+        </button>
+        <div class="HoverState" id="swap-text">Partager l'ecran </div>
+      </div>
+      !-->
+
+      <div class="buttonContainer">
+        <button class="hoverButton" onclick="{toggleChat()}">
+          <i id="chat-icon" class="fas fa-comment fa-xs"></i>
+        </button>
+        <div class="HoverState" id="chat-text"> Montrer la discussion</div>
+      </div>
+
+      <div class="buttonContainer">
+        <button
+          class="hoverButton"
+          id="pip-button"
+          onclick="{togglePictureInPicture()}"
+        >
+          <i class="fas fa-external-link-alt fa-xs"></i>
+        </button>
+        <div class="HoverState" id="pip-text">Faire passer la video en arrière plan</div>
+      </div>
+     
+      <div class="buttonContainer">
+        <button
+          class="hoverButton"
+          onclick="{window.location.href = '/newcall'}"
+        >
+          <i class="fas fa-phone-slash fa-xs"></i>
+        </button>
+        <div class="HoverState">Fin de l'appel</div>
+      </div>
+    </div>
+
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../js/snackbar.js"></script>
+    <script src="../js/autolink.js"></script>
+    <script src="https://cdn.rawgit.com/muaz-khan/DetectRTC/master/DetectRTC.js"></script>
+    <script id="chatJS" src="../js/chat.js"></script>
+  </body>
+</html>
