@@ -35,6 +35,10 @@ app.get("/docteur", function (req, res) {
   res.sendFile(path.join(public, "docteur.html"));
 });
 
+app.get("/rdv", function (req, res) {
+  res.sendFile(path.join(public, "rdv.html"));
+});
+
 app.get("/join/", function (req, res) {
   res.redirect("/");
 });
