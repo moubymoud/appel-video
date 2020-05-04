@@ -1,6 +1,6 @@
 require("dotenv").config();
 var sslRedirect = require("heroku-ssl-redirect");
-// Get twillio auth and SID from heroku if deployed, else get from local .env file
+// Initialisation et authentification
 var twillioAuthToken =
   process.env.HEROKU_AUTH_TOKEN || process.env.LOCAL_AUTH_TOKEN;
 var twillioAccountSID =
@@ -14,10 +14,10 @@ var path = require("path");
 var public = path.join(__dirname, "public");
 const url = require("url");
 
-// enable ssl redirect
+// force le ssl par redirection
 app.use(sslRedirect());
 
-// Remove trailing slashes in url
+// Simplifie l'url
 app.use(function (req, res, next) {
   if (req.path.substr(-1) === "/" && req.path.length > 1) {
     let query = req.url.slice(req.path.length);
@@ -27,6 +27,7 @@ app.use(function (req, res, next) {
   }
 });
 
+// La liste des URL sur la plateforme
 app.get("/", function (req, res) {
   res.sendFile(path.join(public, "landing.html"));
 });
@@ -60,10 +61,10 @@ app.get("/notsupportedios", function (req, res) {
   res.sendFile(path.join(public, "notsupportedios.html"));
 });
 
-// Serve static files in the public directory
+// Rend les fichier dans "public" statique
 app.use(express.static("public"));
 
-// Simple logging function to add room name
+// Affichage des informations
 function logIt(msg, room) {
   if (room) {
     console.log(room + ": " + msg);
@@ -72,10 +73,9 @@ function logIt(msg, room) {
   }
 }
 
-// When a socket connects, set up the specific listeners we will use.
+// Initialisation de la téléconsultation
 io.on("connection", function (socket) {
-  // When a client tries to join a room, only allow them if they are first or
-  // second in the room. Otherwise it is full.
+  // Faire en sorte qu'une 3ème personne n'assiste pas a la téléconsultation
   socket.on("join", function (room) {
     logIt("A client joined the room", room);
     var clients = io.sockets.adapter.rooms[room];
@@ -84,9 +84,9 @@ io.on("connection", function (socket) {
       socket.join(room);
     } else if (numClients === 1) {
       socket.join(room);
-      // When the client is second to join the room, both clients are ready.
+      // Informer que le patient est connecté.
       logIt("Broadcasting ready message", room);
-      // First to join call initiates call
+      // Permettre le début de la télconsultation
       socket.broadcast.to(room).emit("willInitiateCall", room);
       socket.emit("ready", room).to(room);
       socket.broadcast.to(room).emit("ready", room);
@@ -96,8 +96,7 @@ io.on("connection", function (socket) {
     }
   });
 
-  // When receiving the token message, use the Twilio REST API to request an
-  // token to get ephemeral credentials to use the TURN server.
+  // Utililsation du token de twilio pour faire les échanges et instaurer la téléconsultation
   socket.on("token", function (room) {
     logIt("Received token request", room);
     twilio.tokens.create(function (err, response) {
@@ -110,26 +109,26 @@ io.on("connection", function (socket) {
     });
   });
 
-  // Relay candidate messages
+  // Relai médecin
   socket.on("candidate", function (candidate, room) {
     logIt("Received candidate. Broadcasting...", room);
     socket.broadcast.to(room).emit("candidate", candidate);
   });
 
-  // Relay offers
+  // Relai patient 
   socket.on("offer", function (offer, room) {
     logIt("Received offer. Broadcasting...", room);
     socket.broadcast.to(room).emit("offer", offer);
   });
 
-  // Relay answers
+  // Mise en place de la vidéo
   socket.on("answer", function (answer, room) {
     logIt("Received answer. Broadcasting...", room);
     socket.broadcast.to(room).emit("answer", answer);
   });
 });
 
-// Listen for Heroku port, otherwise just use 3000
+// Essaie de voir pour Heroku, sinon va sur 3000
 var port = process.env.PORT || 3000;
 http.listen(port, function () {
   console.log("http://localhost:" + port);
