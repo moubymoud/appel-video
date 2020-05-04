@@ -14,7 +14,7 @@ var path = require("path");
 var public = path.join(__dirname, "public");
 const url = require("url");
 
-// force le ssl par redirection
+// force le ssl-tls par redirection
 app.use(sslRedirect());
 
 // Simplifie l'url
