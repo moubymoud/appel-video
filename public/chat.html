@@ -60,6 +60,17 @@
         </button>
         <div class="HoverState" id="mic-text">Muet</div>
       </div>
+    
+    <div class="buttonContainer">
+       <button
+          class="hoverButton"
+          onclick="{window.location.href = '/newcall'}"
+        >
+          <i class="fas fa-phone-slash fa-xs"></i>
+        </button>
+        <div class="HoverState">Fin de l'appel</div>
+      </div>
+    </div>
       
       <!-- PERMET DE FAIRE PASSER L'APPEL EN PLEIN ECRAN -->
 
@@ -105,18 +116,6 @@
         </button>
         <div class="HoverState" id="pip-text">Faire passer la video en arrière plan</div>
       </div>
-     
-      <div class="buttonContainer">
-        <button
-          class="hoverButton"
-          onclick="{window.location.href = '/newcall'}"
-        >
-          <i class="fas fa-phone-slash fa-xs"></i>
-        </button>
-        <div class="HoverState">Fin de l'appel</div>
-      </div>
-    </div>
-
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="../js/snackbar.js"></script>
