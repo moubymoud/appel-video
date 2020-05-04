@@ -24,7 +24,6 @@ cd appel-video
 
 #### Ensuite
 
-- Renommer le fichier ".env.template" à ".env"
 - Créez un compte gratuit chez twilio https://www.twilio.com/
 - Obtenez le SID et le Auth Token de votre compte à partir de votre console Twilio
 - Ouvrez le fichier .env et remplissez le avec le SID et le Auth Token
