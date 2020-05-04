@@ -18,7 +18,7 @@ Elle permet de passer des appels vidéo de qualité, avec un temps de latence mo
 - Clonez ce projet
 
 ```
-git clone https://github.com/moubymoud/video-call
+git clone https://github.com/moubymoud/appel-video
 cd video-call
 ```
 
