@@ -31,8 +31,8 @@ app.get("/", function (req, res) {
   res.sendFile(path.join(public, "landing.html"));
 });
 
-app.get("/newcall", function (req, res) {
-  res.sendFile(path.join(public, "newcall.html"));
+app.get("/docteur", function (req, res) {
+  res.sendFile(path.join(public, "docteur.html"));
 });
 
 app.get("/join/", function (req, res) {
